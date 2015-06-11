@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="8YX-ce-x5E">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -186,66 +186,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FyR-lV-vPm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="635" y="-137"/>
-        </scene>
-        <!--Video Recorder View Controller-->
-        <scene sceneID="LNQ-Kj-o6O">
-            <objects>
-                <viewController id="jSR-60-Ytr" customClass="VideoRecorderViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="wAe-tL-ly6"/>
-                        <viewControllerLayoutGuide type="bottom" id="0x6-JF-DqQ"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="xfd-FK-JF0">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yp2-SD-5wO">
-                                <rect key="frame" x="25" y="90" width="71" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Start/Stop">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="StartStopButtonPressed:" destination="jSR-60-Ytr" eventType="touchUpInside" id="53H-p1-xFv"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qLA-3T-pS5">
-                                <rect key="frame" x="241" y="90" width="54" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Camera">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="CameraToggleButtonPressed:" destination="jSR-60-Ytr" eventType="touchUpInside" id="Mk8-Oq-CE5"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" red="1" green="0.85991463059999995" blue="0.2222005738" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="3Of-xm-cHz"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7Vf-ig-uIN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1906" y="1633"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="npN-Yt-2ux">
-            <objects>
-                <viewController id="KDL-wJ-d9l" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="QLc-SW-Whj"/>
-                        <viewControllerLayoutGuide type="bottom" id="lOA-Ji-HLY"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="A2p-Uy-0Hg">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" red="1" green="0.85991463059999995" blue="0.2222005738" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="H4x-Za-8XR"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dvN-ie-eQF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1922" y="2417"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vex-rW-GRa">
