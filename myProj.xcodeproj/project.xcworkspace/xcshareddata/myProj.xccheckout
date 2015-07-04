@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>58660F94-5018-433E-A3D5-381DAF096661</string>
+	<key>IDESourceControlProjectName</key>
+	<string>myProj</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>EFE5B6BD0311FBC9651C40D178ACE10D6A939342</key>
+		<string>https://github.com/rahulgarg12/ChitChat-iPhone.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>myProj.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>EFE5B6BD0311FBC9651C40D178ACE10D6A939342</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/rahulgarg12/ChitChat-iPhone.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>EFE5B6BD0311FBC9651C40D178ACE10D6A939342</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>EFE5B6BD0311FBC9651C40D178ACE10D6A939342</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ChitChat_Basic</string>
+		</dict>
+	</array>
+</dict>
+</plist>
