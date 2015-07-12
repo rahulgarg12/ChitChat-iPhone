@@ -14,6 +14,8 @@
 
 @implementation ConnectionsViewController
 
+MCHandler *MCHandlerObject;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -28,15 +30,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [super viewDidLoad];
+    MCHandlerObject = [MCHandler sharedSingletonClass]; // initialising Singleton Class
     
-    [_Name resignFirstResponder];
+    _Name.delegate = self;
     
-    _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate]; // instantiate the appDelegate object using the sharedApplication class method.
-    
-    [[_appDelegate mcManager] setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name]; // call any required public methods of the mcManager object, the setupPeerAndSessionWithDisplayName: method is being called, and as we are in the initialisation of our class, as the display name of our device we specify its actual name.
+    [MCHandlerObject setupPeerAndSessionWithDisplayName:[UIDevice currentDevice].name]; // call any required public methods of the mcManager object, the setupPeerAndSessionWithDisplayName: method is being called, and as we are in the initialisation of our class, as the display name of our device we specify its actual name.
    
-    [[_appDelegate mcManager] advertiseSelf:_Visible_switch.isOn]; // current state of our switch, to either enable or keep nil the advertiser object.
+    [MCHandlerObject advertiseSelf:_Visible_switch.isOn]; // current state of our switch, to either enable or keep nil the advertiser object.
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(peerDidChangeStateWithNotification:) name:@"MCDidChangeStateNotification" object:nil]; // observer for notification
     
@@ -46,38 +46,44 @@
     [_ConnectedDevices_table setDataSource:self];
     //(for arrConnectedDevices) in order our table view to respond to everything we want, we must set our class as its delegate and its datasource.
 
-
 }
+
+#pragma mark - two delegate methods of the MCBrowserViewControllerDelegate.
 
 -(void)browserViewControllerDidFinish:(MCBrowserViewController *)browserViewController{
-    [_appDelegate.mcManager.browser dismissViewControllerAnimated:YES completion:nil];
+    [MCHandlerObject.browser dismissViewControllerAnimated:YES completion:nil];
 }
-
 
 -(void)browserViewControllerWasCancelled:(MCBrowserViewController *)browserViewController{
-    [_appDelegate.mcManager.browser dismissViewControllerAnimated:YES completion:nil];
+    [MCHandlerObject.browser dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark - delegate method of the text field
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{ // we want the keyboard to be disappeared when the Return button is tapped and the peerID object of the MCManager class to get the name we set to the text field.
     
     [_Name resignFirstResponder];
+    NSLog(@"%@",_Name.text);
     
-    _appDelegate.mcManager.peerID = nil;
-    _appDelegate.mcManager.session = nil;
-    _appDelegate.mcManager.browser = nil;
+    // In viewDidLoad we have already initialised both the peerID and the session objects, so first we need to set them to nil and then reinitialise them using the specified name by calling the setupPeerAndSessionWithDisplayName: method.
+    if (![_Name.text isEqual: @""]) {
+        MCHandlerObject.peerID = nil;
+        MCHandlerObject.session = nil;
+        MCHandlerObject.browser = nil;
     
-    if ([_Visible_switch isOn]) {
-        [_appDelegate.mcManager.advertiser stop];
+        if ([_Visible_switch isOn]) {
+            [MCHandlerObject.advertiser stop];
+        }
+        MCHandlerObject.advertiser = nil;
+    
+        [MCHandlerObject setupPeerAndSessionWithDisplayName:_Name.text];
+        [MCHandlerObject setupMCBrowser];
+        [MCHandlerObject advertiseSelf:_Visible_switch.isOn];
     }
-    _appDelegate.mcManager.advertiser = nil;
-    
-    
-    [_appDelegate.mcManager setupPeerAndSessionWithDisplayName:_Name.text];
-    [_appDelegate.mcManager setupMCBrowser];
-    [_appDelegate.mcManager advertiseSelf:_Visible_switch.isOn];
-    
     return YES;
 }
+
+
 
 -(void)peerDidChangeStateWithNotification:(NSNotification *)notification{ // implementation of private method notification
     MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
@@ -90,7 +96,7 @@
             [_arrConnectedDevices addObject:peerDisplayName];
             
             [_ConnectedDevices_table reloadData];
-            BOOL peersExist = ([[_appDelegate.mcManager.session connectedPeers] count] == 0);
+            BOOL peersExist = ([[MCHandlerObject.session connectedPeers] count] == 0);
             [_Disconnect_button setEnabled:!peersExist];
             [_Name setEnabled:peersExist];
         }
@@ -104,17 +110,19 @@
     
 }
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{ // table view delegate methods
+#pragma mark - table view delegate methods
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{ // table view delegate methods
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return [_arrConnectedDevices count];
 }
 
 
--(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{ // table view delegate methods
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CellIdentifier"];
     
     if (cell == nil) {
@@ -127,7 +135,7 @@
 }
 
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{ //table view delegate methods
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50.0;
 }
 
@@ -138,21 +146,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - public method implementation
 
 - (IBAction)Browse:(id)sender {
-    [[_appDelegate mcManager] setupMCBrowser]; // calling of setupMCBrowser public method of the MCManager class.
-    [[[_appDelegate mcManager] browser] setDelegate:self];
-    [self presentViewController:[[_appDelegate mcManager] browser] animated:YES completion:nil];
+    [MCHandlerObject setupMCBrowser]; // calling of setupMCBrowser public method of the MCManager class.
+    [[MCHandlerObject browser] setDelegate:self];
+    [self presentViewController:[MCHandlerObject browser] animated:YES completion:nil];
 }
 
-- (IBAction)Visibility:(id)sender
-{
-    [_appDelegate.mcManager advertiseSelf:_Visible_switch.isOn];
+- (IBAction)Visibility:(id)sender {
+    [MCHandlerObject advertiseSelf:_Visible_switch.isOn];
 }
 
-- (IBAction)disconnect:(id)sender
-{
-    [_appDelegate.mcManager.session disconnect];
+- (IBAction)disconnect:(id)sender {
+    [MCHandlerObject.session disconnect];
     
     _Name.enabled = YES;
     

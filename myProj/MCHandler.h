@@ -1,5 +1,5 @@
 //
-//  MCManager.h
+//  MCHandler.h
 //  myProj
 //
 //  Created by Rahul Garg on 03/07/14.
@@ -9,8 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
 
-
-@interface MCManager : NSObject <MCSessionDelegate>
+@interface MCHandler : NSObject <MCSessionDelegate>
 
 @property (strong, nonatomic) MCPeerID *peerID; //represents the device and it contains various properties needed for the        discovery and session establishment phases
 
@@ -19,6 +18,11 @@
 @property (nonatomic, strong) MCBrowserViewController *browser; //represents the default UI provided by Apple for browsing for other peers, and we will use it for this purpose.
 
 @property (nonatomic, strong) MCAdvertiserAssistant *advertiser; //it is used from the current peer to advertise itself and make its discovery feasible.
+
+
+@property (nonatomic, strong) id delegate;
+
++ sharedSingletonClass; // Singleton class
 
 -(void)setupPeerAndSessionWithDisplayName:(NSString *)displayName;
 

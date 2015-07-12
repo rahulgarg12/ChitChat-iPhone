@@ -7,32 +7,26 @@
 //
 
 #import "FirstViewController.h"
-#import "AppDelegate.h"
 
 @interface FirstViewController ()
-
-@property (nonatomic, strong) AppDelegate *appDelegate;
-
--(void)sendMyMessage;
--(void)didReceiveDataWithNotification:(NSNotification *)notification;
 
 @end
 
 @implementation FirstViewController
+
+MCHandler *MCHandlerObject;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     _txtMessage.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveDataWithNotification:)
                                                  name:@"MCDidReceiveDataNotification"
-                                               object:nil];
+                                               object:nil]; // called when notification arrives
 
 }
 
@@ -54,7 +48,26 @@
 #pragma mark - IBAction method implementation
 
 - (IBAction)sendMessage:(id)sender {
-    [self sendMyMessage];
+    //[self sendMyMessage];
+    
+    MCHandlerObject = [[MCHandler alloc] init];
+    
+    NSData *dataToSend = [_txtMessage.text dataUsingEncoding:NSUTF8StringEncoding];
+    NSArray *allPeers = MCHandlerObject.session.connectedPeers;
+    NSError *error;
+    
+    [MCHandlerObject.session sendData:dataToSend
+                              toPeers:allPeers
+                             withMode:MCSessionSendDataReliable
+                                error:&error];
+    
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+    
+    [_tvChat setText:[_tvChat.text stringByAppendingString:[NSString stringWithFormat:@"I wrote:\n%@\n\n", _txtMessage.text]]];
+    [_txtMessage setText:@""];
+    [_txtMessage resignFirstResponder];
 }
 
 - (IBAction)cancelMessage:(id)sender {
@@ -64,12 +77,14 @@
 
 #pragma mark - Private method implementation
 
--(void)sendMyMessage{
+/*-(void)sendMyMessage{
+    MCHandlerObject = [[MCHandler alloc] init];
+    
     NSData *dataToSend = [_txtMessage.text dataUsingEncoding:NSUTF8StringEncoding];
-    NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
+    NSArray *allPeers = MCHandlerObject.session.connectedPeers;
     NSError *error;
     
-    [_appDelegate.mcManager.session sendData:dataToSend
+    [MCHandlerObject.session sendData:dataToSend
                                      toPeers:allPeers
                                     withMode:MCSessionSendDataReliable
                                        error:&error];
@@ -81,7 +96,7 @@
     [_tvChat setText:[_tvChat.text stringByAppendingString:[NSString stringWithFormat:@"I wrote:\n%@\n\n", _txtMessage.text]]];
     [_txtMessage setText:@""];
     [_txtMessage resignFirstResponder];
-}
+}*/
 
 
 -(void)didReceiveDataWithNotification:(NSNotification *)notification{
