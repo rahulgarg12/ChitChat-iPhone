@@ -9,8 +9,9 @@
 #import "MCHandler.h"
 
 @implementation MCHandler
-static MCHandler *singletonObject = nil;
 
+static MCHandler *singletonObject = nil;
+SecondViewController *secondViewControllerObject;
 + sharedSingletonClass {
     if (! singletonObject) {
         
@@ -88,16 +89,16 @@ static MCHandler *singletonObject = nil;
 
 
 -(void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress
-
 {
-    
+    NSLog(@"Receiving Resource %@ from %@ with progress %@",resourceName, peerID, progress);
 }
 
 
 -(void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error
-
 {
-    
+    secondViewControllerObject = [[SecondViewController alloc] init];
+    [secondViewControllerObject loadImageFromPath:localURL];
+    [secondViewControllerObject storeImageToPath];
 }
 
 

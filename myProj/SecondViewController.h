@@ -9,6 +9,14 @@
 #import <UIKit/UIKit.h>
 
 
-@interface SecondViewController : UIViewController
+@interface SecondViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+- (IBAction)imageBtn:(id)sender;
+- (IBAction)fileBtn:(id)sender;
+
+@property (retain, nonatomic) IBOutlet UITextView *textView;
+
+-(void)loadImageFromPath:(NSURL *) imageURL;
+-(void)storeImageToPath;
 
 @end
