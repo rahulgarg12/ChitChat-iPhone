@@ -24,7 +24,7 @@ MCHandler *MCHandlerObject;
     _txtMessage.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveDataWithNotification:)
+                                             selector:@selector(receivedDataWithNotification:)
                                                  name:@"MCDidReceiveDataNotification"
                                                object:nil]; // called when notification arrives
 
@@ -48,8 +48,14 @@ MCHandler *MCHandlerObject;
 #pragma mark - IBAction method implementation
 
 - (IBAction)sendMessage:(id)sender {
-    //[self sendMyMessage];
-    
+    [self sendMyMessage];
+}
+
+- (IBAction)cancelMessage:(id)sender {
+    [_txtMessage resignFirstResponder];
+}
+
+-(void)sendMyMessage {
     MCHandlerObject = [[MCHandler alloc] init];
     
     NSData *dataToSend = [_txtMessage.text dataUsingEncoding:NSUTF8StringEncoding];
@@ -70,36 +76,7 @@ MCHandler *MCHandlerObject;
     [_txtMessage resignFirstResponder];
 }
 
-- (IBAction)cancelMessage:(id)sender {
-    [_txtMessage resignFirstResponder];
-}
-
-
-#pragma mark - Private method implementation
-
-/*-(void)sendMyMessage{
-    MCHandlerObject = [[MCHandler alloc] init];
-    
-    NSData *dataToSend = [_txtMessage.text dataUsingEncoding:NSUTF8StringEncoding];
-    NSArray *allPeers = MCHandlerObject.session.connectedPeers;
-    NSError *error;
-    
-    [MCHandlerObject.session sendData:dataToSend
-                                     toPeers:allPeers
-                                    withMode:MCSessionSendDataReliable
-                                       error:&error];
-    
-    if (error) {
-        NSLog(@"%@", [error localizedDescription]);
-    }
-    
-    [_tvChat setText:[_tvChat.text stringByAppendingString:[NSString stringWithFormat:@"I wrote:\n%@\n\n", _txtMessage.text]]];
-    [_txtMessage setText:@""];
-    [_txtMessage resignFirstResponder];
-}*/
-
-
--(void)didReceiveDataWithNotification:(NSNotification *)notification{
+-(void)receivedDataWithNotification:(NSNotification *)notification{
     MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
     NSString *peerDisplayName = peerID.displayName;
     
@@ -108,6 +85,5 @@ MCHandler *MCHandlerObject;
     
     [_tvChat performSelectorOnMainThread:@selector(setText:) withObject:[_tvChat.text stringByAppendingString:[NSString stringWithFormat:@"%@ wrote:\n%@\n\n", peerDisplayName, receivedText]] waitUntilDone:NO];
 }
-
 
 @end

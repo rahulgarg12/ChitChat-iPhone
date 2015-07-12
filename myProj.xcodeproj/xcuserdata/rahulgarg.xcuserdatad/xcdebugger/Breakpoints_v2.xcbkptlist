@@ -58,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "myProj/FirstViewController.m"
-            timestampString = "458424660.8926"
+            timestampString = "458425380.287026"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "-didReceiveDataWithNotification:"
+            startingLineNumber = "79"
+            endingLineNumber = "79"
+            landmarkName = "-receivedDataWithNotification:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
