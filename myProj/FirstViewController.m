@@ -7,32 +7,26 @@
 //
 
 #import "FirstViewController.h"
-#import "AppDelegate.h"
 
 @interface FirstViewController ()
-
-@property (nonatomic, strong) AppDelegate *appDelegate;
-
--(void)sendMyMessage;
--(void)didReceiveDataWithNotification:(NSNotification *)notification;
 
 @end
 
 @implementation FirstViewController
+
+MCHandler *MCHandlerObject;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     _txtMessage.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(didReceiveDataWithNotification:)
+                                             selector:@selector(receivedDataWithNotification:)
                                                  name:@"MCDidReceiveDataNotification"
-                                               object:nil];
+                                               object:nil]; // called when notification arrives
 
 }
 
@@ -61,18 +55,17 @@
     [_txtMessage resignFirstResponder];
 }
 
-
-#pragma mark - Private method implementation
-
--(void)sendMyMessage{
+-(void)sendMyMessage {
+    MCHandlerObject = [[MCHandler alloc] init];
+    
     NSData *dataToSend = [_txtMessage.text dataUsingEncoding:NSUTF8StringEncoding];
-    NSArray *allPeers = _appDelegate.mcManager.session.connectedPeers;
+    NSArray *allPeers = MCHandlerObject.session.connectedPeers;
     NSError *error;
     
-    [_appDelegate.mcManager.session sendData:dataToSend
-                                     toPeers:allPeers
-                                    withMode:MCSessionSendDataReliable
-                                       error:&error];
+    [MCHandlerObject.session sendData:dataToSend
+                              toPeers:allPeers
+                             withMode:MCSessionSendDataReliable
+                                error:&error];
     
     if (error) {
         NSLog(@"%@", [error localizedDescription]);
@@ -83,8 +76,7 @@
     [_txtMessage resignFirstResponder];
 }
 
-
--(void)didReceiveDataWithNotification:(NSNotification *)notification{
+-(void)receivedDataWithNotification:(NSNotification *)notification{
     MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
     NSString *peerDisplayName = peerID.displayName;
     
@@ -93,6 +85,5 @@
     
     [_tvChat performSelectorOnMainThread:@selector(setText:) withObject:[_tvChat.text stringByAppendingString:[NSString stringWithFormat:@"%@ wrote:\n%@\n\n", peerDisplayName, receivedText]] waitUntilDone:NO];
 }
-
 
 @end

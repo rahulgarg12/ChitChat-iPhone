@@ -24,7 +24,7 @@
 		3524524919651735007D09F2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3524524719651735007D09F2 /* InfoPlist.strings */; };
 		3524524B19651735007D09F2 /* myProjTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3524524A19651735007D09F2 /* myProjTests.m */; };
 		3524525719651751007D09F2 /* ConnectionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3524525519651751007D09F2 /* ConnectionsViewController.m */; };
-		3524525B196520FE007D09F2 /* MCManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 3524525A196520FE007D09F2 /* MCManager.m */; };
+		3524525B196520FE007D09F2 /* MCHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 3524525A196520FE007D09F2 /* MCHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,8 +62,8 @@
 		3524524A19651735007D09F2 /* myProjTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = myProjTests.m; sourceTree = "<group>"; };
 		3524525419651751007D09F2 /* ConnectionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionsViewController.h; sourceTree = "<group>"; };
 		3524525519651751007D09F2 /* ConnectionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionsViewController.m; sourceTree = "<group>"; };
-		35245259196520FE007D09F2 /* MCManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCManager.h; sourceTree = "<group>"; };
-		3524525A196520FE007D09F2 /* MCManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCManager.m; sourceTree = "<group>"; };
+		35245259196520FE007D09F2 /* MCHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCHandler.h; sourceTree = "<group>"; };
+		3524525A196520FE007D09F2 /* MCHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,8 +133,8 @@
 				3524523519651735007D09F2 /* SecondViewController.m */,
 				3524525419651751007D09F2 /* ConnectionsViewController.h */,
 				3524525519651751007D09F2 /* ConnectionsViewController.m */,
-				35245259196520FE007D09F2 /* MCManager.h */,
-				3524525A196520FE007D09F2 /* MCManager.m */,
+				35245259196520FE007D09F2 /* MCHandler.h */,
+				3524525A196520FE007D09F2 /* MCHandler.m */,
 				3524523719651735007D09F2 /* Images.xcassets */,
 				3524522019651735007D09F2 /* Supporting Files */,
 			);
@@ -269,7 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3524525719651751007D09F2 /* ConnectionsViewController.m in Sources */,
-				3524525B196520FE007D09F2 /* MCManager.m in Sources */,
+				3524525B196520FE007D09F2 /* MCHandler.m in Sources */,
 				3524523619651735007D09F2 /* SecondViewController.m in Sources */,
 				3524522A19651735007D09F2 /* AppDelegate.m in Sources */,
 				3524523319651735007D09F2 /* FirstViewController.m in Sources */,
@@ -363,7 +363,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -396,7 +396,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

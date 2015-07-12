@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MCHandler.h"
 
 @interface FirstViewController : UIViewController <UITextFieldDelegate>
 
@@ -17,6 +18,8 @@
 - (IBAction)sendMessage:(id)sender;
 - (IBAction)cancelMessage:(id)sender;
 
+-(void)sendMyMessage;
+-(void)receivedDataWithNotification:(NSNotification *)notification;
 
 @end
 

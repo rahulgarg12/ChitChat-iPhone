@@ -1,14 +1,23 @@
 //
-//  MCManager.m
+//  MCHandler.m
 //  myProj
 //
 //  Created by Rahul Garg on 03/07/14.
 //  Copyright (c) 2014 Rahul. All rights reserved.
 //
 
-#import "MCManager.h"
+#import "MCHandler.h"
 
-@implementation MCManager
+@implementation MCHandler
+static MCHandler *singletonObject = nil;
+
++ sharedSingletonClass {
+    if (! singletonObject) {
+        
+        singletonObject = [[MCHandler alloc] init];
+    }
+    return singletonObject;
+}
 
 -(id)init{                          // initialise the class
     self = [super init];
@@ -23,7 +32,7 @@
     return self;
 }
 
--(void)setupPeerAndSessionWithDisplayName:(NSString *)displayName{ // public method implementation
+-(void)setupPeerAndSessionWithDisplayName:(NSString *)displayName{
     _peerID = [[MCPeerID alloc] initWithDisplayName:displayName];
     
     _session = [[MCSession alloc] initWithPeer:_peerID];
@@ -48,7 +57,9 @@
     }
 }
 
--(void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state  // delegate methods of MCSessionDelegate protocol.
+#pragma mark - delegate methods of MCSessionDelegate protocol.
+
+-(void)session:(MCSession *)session peer:(MCPeerID *)peerID didChangeState:(MCSessionState)state  // when Accept button is tapped in Browser Window, connection gets established. We implement these delegate methods
 {
     NSDictionary *dict = @{@"peerID": peerID, @"state" : [NSNumber numberWithInt:state]}; //
     
@@ -56,19 +67,19 @@
     
     switch (state) {
         case MCSessionStateConnected:
-            NSLog(@"Connected: {0}", peerID.displayName);
+            NSLog(@"Connected with %@", peerID.displayName);
             break;
         case MCSessionStateConnecting:
-            NSLog(@"Connecting: {0}", peerID.displayName);
+            NSLog(@"Connecting with %@", peerID.displayName);
             break;
         case MCSessionStateNotConnected:
-            NSLog(@"Not Connected: {0}", peerID.displayName);
+            NSLog(@"Not Connected with %@", peerID.displayName);
             break;
     }
 }
 
 
--(void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID  // delegate methods of MCSessionDelegate protocol. Post a notification to know about the peer state changing, and along with the notification
+-(void)session:(MCSession *)session didReceiveData:(NSData *)data fromPeer:(MCPeerID *)peerID  // Post a notification to know about the peer state changing, and along with the notification
 {
     NSDictionary *dict = @{@"data": data, @"peerID": peerID};
     
@@ -76,21 +87,21 @@
 }
 
 
--(void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress   // delegate methods of MCSessionDelegate protocol.
+-(void)session:(MCSession *)session didStartReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID withProgress:(NSProgress *)progress
 
 {
     
 }
 
 
--(void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error   // delegate methods of MCSessionDelegate protocol.
+-(void)session:(MCSession *)session didFinishReceivingResourceWithName:(NSString *)resourceName fromPeer:(MCPeerID *)peerID atURL:(NSURL *)localURL withError:(NSError *)error
 
 {
     
 }
 
 
--(void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID   // delegate methods of MCSessionDelegate protocol.
+-(void)session:(MCSession *)session didReceiveStream:(NSInputStream *)stream withName:(NSString *)streamName fromPeer:(MCPeerID *)peerID  
 
 {
     
