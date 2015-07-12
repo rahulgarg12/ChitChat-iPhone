@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <MultipeerConnectivity/MultipeerConnectivity.h>
+#import "SecondViewController.h"
 
 @interface MCHandler : NSObject <MCSessionDelegate>
 

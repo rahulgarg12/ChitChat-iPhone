@@ -21,13 +21,12 @@ MCHandler *MCHandlerObject;
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    _txtMessage.delegate = self;
+    [_txtMessage setDelegate:self];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receivedDataWithNotification:)
+                                             selector:@selector(didReceiveDataWithNotification:)
                                                  name:@"MCDidReceiveDataNotification"
                                                object:nil]; // called when notification arrives
-
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,7 +44,7 @@ MCHandler *MCHandlerObject;
 }
 
 
-#pragma mark - IBAction method implementation
+#pragma mark - IBAction methods implementation
 
 - (IBAction)sendMessage:(id)sender {
     [self sendMyMessage];
@@ -54,6 +53,9 @@ MCHandler *MCHandlerObject;
 - (IBAction)cancelMessage:(id)sender {
     [_txtMessage resignFirstResponder];
 }
+
+
+#pragma mark - Private methods implelemtation
 
 -(void)sendMyMessage {
     MCHandlerObject = [[MCHandler alloc] init];
@@ -76,7 +78,7 @@ MCHandler *MCHandlerObject;
     [_txtMessage resignFirstResponder];
 }
 
--(void)receivedDataWithNotification:(NSNotification *)notification{
+-(void)didReceiveDataWithNotification:(NSNotification *)notification{
     MCPeerID *peerID = [[notification userInfo] objectForKey:@"peerID"];
     NSString *peerDisplayName = peerID.displayName;
     
